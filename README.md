@@ -23,6 +23,13 @@ git clone https://github.com/mswell/nvim.git ~/.config/nvim
 
 and start `nvim` to install all plugins and fun :)
 
+## Recent additions
+
+- Added a custom `omtheme` colorscheme implemented inside this repo.
+- Added multilingual spellcheck for writing and code filetypes.
+- Added automatic session save/restore with `auto-session`.
+- Added local spell dictionaries under `spell/`.
+
 <h6 align="center">
     <a href="https://raw.githubusercontent.com/mswell/dotfiles/master/LICENSE">MIT</a>
     ©

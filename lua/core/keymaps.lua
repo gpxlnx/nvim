@@ -6,6 +6,7 @@ vim.g.maplocalleader = ' '
 
 -- For conciseness
 local opts = { noremap = true, silent = true }
+local utils = require 'core.utils'
 
 -- Disable the spacebar key's default behavior in Normal and Visual modes
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
@@ -113,5 +114,62 @@ vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, { desc = 'Show Diagn
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Diagnostic List' })
 
 -- Session management
-vim.keymap.set('n', '<leader>ss', ':mksession! .session.vim<CR>', { noremap = true, silent = false, desc = 'Save Session' })
-vim.keymap.set('n', '<leader>sl', ':source .session.vim<CR>', { noremap = true, silent = false, desc = 'Load Session' })
+vim.keymap.set('n', '<leader>ss', '<cmd>AutoSession save<CR>', { noremap = true, silent = true, desc = 'Save Session' })
+vim.keymap.set('n', '<leader>sl', '<cmd>AutoSession search<CR>', { noremap = true, silent = true, desc = 'Load Session Picker' })
+
+-- Writing and wrapping
+vim.keymap.set('v', '<leader>rp', "<Esc><Cmd>lua require('core.utils').wrap_in_chars('(')<CR>", { desc = 'Wrap with Parentheses' })
+vim.keymap.set('v', '<leader>rq', "<Esc><Cmd>lua require('core.utils').wrap_in_chars('\\'')<CR>", { desc = 'Wrap with Single Quotes' })
+vim.keymap.set('v', '<leader>rQ', '<Esc><Cmd>lua require("core.utils").wrap_in_chars("\\\"")<CR>', { desc = 'Wrap with Double Quotes' })
+vim.keymap.set('v', '<leader>rs', "<Esc><Cmd>lua require('core.utils').wrap_in_chars('[')<CR>", { desc = 'Wrap with Square Brackets' })
+vim.keymap.set('v', '<leader>rc', "<Esc><Cmd>lua require('core.utils').wrap_in_chars('{')<CR>", { desc = 'Wrap with Curly Braces' })
+vim.keymap.set('v', '<leader>rb', "<Esc><Cmd>lua require('core.utils').wrap_in_chars('`')<CR>", { desc = 'Wrap with Backticks' })
+vim.keymap.set('v', '<leader>rh', "<Esc><Cmd>lua require('core.utils').wrap_in_chars('<')<CR>", { desc = 'Wrap with Angle Brackets' })
+
+vim.keymap.set('v', '<leader>mb', "<Esc><Cmd>lua require('core.utils').wrap_in_chars('**')<CR>", { desc = 'Wrap Markdown Bold' })
+vim.keymap.set('v', '<leader>mi', "<Esc><Cmd>lua require('core.utils').wrap_in_chars('_')<CR>", { desc = 'Wrap Markdown Italic' })
+vim.keymap.set('v', '<leader>mc', "<Esc><Cmd>lua require('core.utils').wrap_in_chars('`')<CR>", { desc = 'Wrap Markdown Code' })
+
+vim.keymap.set('n', '<leader>mcc', function()
+  vim.api.nvim_put({
+    '```',
+    '',
+    '```',
+  }, 'l', true, true)
+  vim.cmd 'normal! kk'
+end, { desc = 'Insert Markdown Code Block' })
+
+vim.keymap.set('n', '<leader>ml', function()
+  local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+  vim.api.nvim_buf_set_text(0, row - 1, col, row - 1, col, { '[Text](Link)' })
+  vim.api.nvim_win_set_cursor(0, { row, col + 1 })
+end, { desc = 'Insert Markdown Link' })
+
+vim.keymap.set('n', '<leader>mim', function()
+  local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+  vim.api.nvim_buf_set_text(0, row - 1, col, row - 1, col, { '![Alt](Image)' })
+  vim.api.nvim_win_set_cursor(0, { row, col + 2 })
+end, { desc = 'Insert Markdown Image' })
+
+vim.keymap.set('n', '<leader>rw', function()
+  if vim.wo.wrap then
+    vim.opt.wrap = false
+    vim.opt.linebreak = false
+    vim.opt.breakindent = false
+    utils.notify('Soft wrap disabled')
+  else
+    vim.opt.wrap = true
+    vim.opt.linebreak = true
+    vim.opt.breakindent = true
+    utils.notify('Soft wrap enabled')
+  end
+end, { desc = 'Toggle Soft Wrap' })
+
+vim.keymap.set('n', '<leader>rf', function()
+  vim.fn.setreg('+', vim.fn.expand '%:p')
+  utils.notify 'Copied full file path'
+end, { desc = 'Copy Full File Path' })
+
+vim.keymap.set('n', '<leader>cw', function()
+  utils.count_words()
+end, { desc = 'Count Words' })

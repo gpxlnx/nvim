@@ -1,12 +1,9 @@
 -- Highlight, edit, and navigate code
--- Updated for nvim-treesitter 1.x (main branch)
 return {
   'nvim-treesitter/nvim-treesitter',
   lazy = false,
   build = ':TSUpdate',
   config = function()
-    local ts = require 'nvim-treesitter'
-
     -- Parsers to install
     local parsers = {
       'lua',
@@ -37,10 +34,13 @@ return {
       'html',
     }
 
-    -- Install parsers
-    for _, parser in ipairs(parsers) do
-      ts.install(parser)
-    end
+    -- Install parsers via configs (compatible with all nvim-treesitter versions)
+    require('nvim-treesitter.configs').setup {
+      ensure_installed = parsers,
+      auto_install = true,
+      highlight = { enable = true },
+      indent = { enable = true },
+    }
 
     -- Register additional file extensions
     vim.filetype.add { extension = { tf = 'terraform' } }

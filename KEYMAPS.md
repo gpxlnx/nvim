@@ -22,7 +22,15 @@
 | `<C-u>` | Scroll Up and Center | n |
 | `n` | Next Search Result | n |
 | `N` | Prev Search Result | n |
+| `j` | Move Down (display line quando sem count) | n |
+| `k` | Move Up (display line quando sem count) | n |
+| `x` | Delete char sem yank | n |
 | `jk` / `kj` | Exit Insert Mode | i |
+
+## Spellcheck
+
+Spellcheck multilíngue é ativado automaticamente para `text`, `markdown`, `gitcommit`, `lua`, `python`, `html`, `javascript`, `typescript`, `css` e `scss`.
+Idiomas ativos: `pt_br`, `pt`, `en_us`, `en`.
 
 ## Navigation
 
@@ -32,6 +40,7 @@
 | `<C-j>` | Go to Lower Window | n |
 | `<C-k>` | Go to Upper Window | n |
 | `<C-l>` | Go to Right Window | n |
+| `<C-\>` | Go to Previous Split/Tmux Pane | n |
 | `[d` | Prev Diagnostic | n |
 | `]d` | Next Diagnostic | n |
 
@@ -101,6 +110,7 @@
 | `<leader>sr` | Resume | n |
 | `<leader>sm` | Marks | n |
 | `<leader>s.` | Recent Files | n |
+| `<leader>?` | Recent Files | n |
 | `<leader>s/` | Grep Open Files | n |
 | `<leader>/` | Search in Buffer | n |
 | `<leader>sds` | Document Symbols | n |
@@ -139,10 +149,38 @@
 |-------|-----------|------|
 | `<C-/>` / `<C-c>` | Toggle Comment | n, v |
 | `<leader>lw` | Toggle Line Wrap | n |
+| `<leader>cw` | Count Words | n |
 | `<` | Indent Left | v |
 | `>` | Indent Right | v |
 | `<A-j>` | Move Line Down | v |
 | `<A-k>` | Move Line Up | v |
+| `<A-j>` | Move Line Down | n |
+| `<A-k>` | Move Line Up | n |
+
+## Writing / Wrap
+
+| Tecla | Descrição | Modo |
+|-------|-----------|------|
+| `<leader>rp` | Wrap with Parentheses | v |
+| `<leader>rq` | Wrap with Single Quotes | v |
+| `<leader>rQ` | Wrap with Double Quotes | v |
+| `<leader>rs` | Wrap with Square Brackets | v |
+| `<leader>rc` | Wrap with Curly Braces | v |
+| `<leader>rb` | Wrap with Backticks | v |
+| `<leader>rh` | Wrap with Angle Brackets | v |
+| `<leader>rw` | Toggle Soft Wrap | n |
+| `<leader>rf` | Copy Full File Path | n |
+
+## Markdown
+
+| Tecla | Descrição | Modo |
+|-------|-----------|------|
+| `<leader>mb` | Wrap Markdown Bold | v |
+| `<leader>mi` | Wrap Markdown Italic | v |
+| `<leader>mc` | Wrap Markdown Code | v |
+| `<leader>mcc` | Insert Markdown Code Block | n |
+| `<leader>ml` | Insert Markdown Link | n |
+| `<leader>mim` | Insert Markdown Image | n |
 
 ## AI Assistant (OpenCode)
 
@@ -166,6 +204,47 @@
 | `<leader>ac` | Compact Session | n |
 | `<leader>au` | Scroll Up | n |
 | `<leader>aj` | Scroll Down | n |
+
+### Dentro do picker do OpenCode (snacks):
+
+| Tecla | Descrição |
+|-------|-----------|
+| `<A-a>` | Enviar item selecionado para o OpenCode |
+
+## Treesitter (Seleção Incremental)
+
+| Tecla | Descrição | Modo |
+|-------|-----------|------|
+| `<C-Space>` | Iniciar seleção | n |
+| `<C-Space>` | Expandir para nó pai | v |
+| `<C-s>` | Expandir para escopo | v |
+| `<M-Space>` | Reduzir seleção | v |
+
+## Sessions
+
+| Tecla | Descrição | Modo |
+|-------|-----------|------|
+| `<leader>ss` | Save Session | n |
+| `<leader>sl` | Load Session Picker | n |
+
+## Slides
+
+Plugin `aspeddro/slides.nvim` — comandos disponíveis via `:`:
+
+| Comando | Descrição |
+|---------|-----------|
+| `:SlidesStart` | Iniciar apresentação (fullscreen) |
+| `:SlidesStop` | Encerrar apresentação |
+
+## Markdown Preview
+
+Plugin `iamcco/markdown-preview.nvim` — carregado apenas em arquivos `.md`:
+
+| Comando | Descrição |
+|---------|-----------|
+| `:MarkdownPreview` | Abrir preview no browser |
+| `:MarkdownPreviewStop` | Fechar preview |
+| `:MarkdownPreviewToggle` | Toggle do preview |
 
 ## Harpoon (Quick File Navigation)
 
@@ -198,8 +277,35 @@
 | `<F2>` | Debug: Step Over | n |
 | `<F3>` | Debug: Step Out | n |
 | `<F7>` | Debug: Toggle UI | n |
-| `<leader>b` | Toggle Breakpoint | n |
-| `<leader>B` | Breakpoint Condition | n |
+| `<leader>db` | Toggle Breakpoint | n |
+| `<leader>dB` | Breakpoint Condition | n |
+
+## Treesitter Textobjects
+
+| Tecla | Descrição | Modo |
+|-------|-----------|------|
+| `aa` | Select Parameter Outer | x, o |
+| `ia` | Select Parameter Inner | x, o |
+| `af` | Select Function Outer | x, o |
+| `if` | Select Function Inner | x, o |
+| `ac` | Select Class Outer | x, o |
+| `ic` | Select Class Inner | x, o |
+| `]m` | Next Function Start | n, x, o |
+| `]]` | Next Class Start | n, x, o |
+| `]M` | Next Function End | n, x, o |
+| `][` | Next Class End | n, x, o |
+| `[m` | Previous Function Start | n, x, o |
+| `[[` | Previous Class Start | n, x, o |
+| `[M` | Previous Function End | n, x, o |
+| `[]` | Previous Class End | n, x, o |
+| `<leader>a` | Swap Next Parameter | n |
+| `<leader>A` | Swap Previous Parameter | n |
+
+## Tema
+
+| Tecla | Descrição | Modo |
+|-------|-----------|------|
+| `<leader>bg` | Toggle Background Transparency (Nord) | n |
 
 ## Diagnostics
 
@@ -268,5 +374,24 @@ Quando você pressiona `<leader>` (Space), o which-key mostra os seguintes grupo
 
 ---
 
-**Última atualização**: 2025-10-29
+## Atalhos padrão do Neovim (folds)
+
+| Tecla | Descrição | Modo |
+|-------|-----------|------|
+| `za` | Toggle fold atual | n |
+| `zA` | Toggle fold atual recursivamente | n |
+| `zo` | Open fold atual | n |
+| `zO` | Open fold atual recursivamente | n |
+| `zc` | Close fold atual | n |
+| `zC` | Close fold atual recursivamente | n |
+| `zr` | Reduce fold level (abre mais folds) | n |
+| `zR` | Open all folds | n |
+| `zm` | Fold more (fecha mais folds) | n |
+| `zM` | Close all folds | n |
+| `zv` | Abre folds para revelar cursor | n |
+| `zi` | Toggle `foldenable` | n |
+
+---
+
+**Última atualização**: 2026-03-04
 **Baseado em**: LazyVim keymaps style guide

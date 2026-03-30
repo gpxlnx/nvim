@@ -224,7 +224,12 @@ return { -- LSP Configuration & Plugins
       bashls = {},
       graphql = {},
       cssls = {},
-      ltex = {},
+      -- ltex desabilitado: a biblioteca Java langdetect imprime
+      -- warnings em stdout (ex: "no common words file defined for
+      -- Japanese"), corrompendo o protocolo LSP JSON-RPC.
+      -- Bug upstream sem fix: https://github.com/valentjn/ltex-ls/issues/172
+      -- Para grammar checking, use :LtexEnable (wrapper abaixo) ou harper_ls.
+      -- ltex = {},
       texlab = {},
     }
 
@@ -240,12 +245,17 @@ return { -- LSP Configuration & Plugins
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
     require('mason-lspconfig').setup {
+      -- Evita auto-habilitar qualquer servidor instalado no Mason.
+      -- Isso e importante porque o `ltex-ls` pode estar instalado localmente
+      -- e sua lib de deteccao de idioma escreve warnings em stdout,
+      -- quebrando o framing JSON-RPC do LSP.
+      automatic_enable = false,
       handlers = {
         function(server_name)
-          local server = servers[server_name] or {}
-          -- This handles overriding only values explicitly passed
-          -- by the server configuration above. Useful when disabling
-          -- certain features of an LSP (for example, turning off formatting for tsserver)
+          local server = servers[server_name]
+          if not server then
+            return -- skip servers not in our table (e.g. ltex)
+          end
           server.capabilities = vim.tbl_deep_extend(
             'force',
             {},
